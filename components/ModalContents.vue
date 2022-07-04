@@ -1,58 +1,27 @@
 <template>
-  <section>
-    <h2 class="sectionTitle">モーダルウィンドウ</h2>
-    <div class="box">
-      <code>
-        ライブラリ使用無し
-      </code>
+  <div class="modal-wrap" :class="{ 'is-open': modalSwitch }">
+    <div class="modal">
+      <p class="modal-ttl">{{ modalTtl }}</p>
+      <div class="modal-content">
+        <p>{{ modalContent }}</p>
+      </div>
+      <div class="modal-btn-wrap">
+        <button class="modal-close" @click="modalClose">閉じる</button>
+      </div>
     </div>
-    <div class="box">
-      <p>参考サイト：<a href="https://style01.net/2170/" target="_blank">https://style01.net/2170/</a></p>
-    </div>
-    <div class="loggic">
-
-      <article>
-        <h3 class="boxTitle">モーダル1</h3>
-        <Modal :modalItems="modalItems[0]" />
-      </article>
-
-      <article>
-        <h3 class="boxTitle">モーダル2</h3>
-        <Modal :modalItems="modalItems[1]" />
-      </article>
-
-    </div>
-  </section>
-
+    <div class="modal-overlay" @click="modalClose"></div>
+  </div>
 </template>
-
 
 <script>
 export default {
-  name: "App",
-  components: {
-  },
   props: ["modalFlg", "modalTtl", "modalContent"],
   data() {
     return {
       childModalFlg: this.modalFlg,
-      modalItems: [
-        {
-          modalTtl: "モダール１",
-          modalContent: "モーダル１が立ち上がった",
-        },
-        {
-          modalTtl: "モダール２",
-          modalContent: "モーダル２が立ち上がった",
-        },
-      ],
     };
   },
   methods: {
-    modalClick() {
-      this.childModalFlg = !this.modalFlg;
-      this.$emit("modal-clicked", this.childModalFlg);
-    },
     modalClose() {
       if (this.childModalFlg) {
         this.childModalFlg = false;
@@ -147,25 +116,5 @@ export default {
       text-align: center;
     }
   }
-}
-.btn {
-  background: #10afd5;
-  color: #fff;
-  font-size: 15px;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: 0.3s;
-  &:hover {
-    opacity: 0.7;
-  }
-}
-.boxTitle{
-  margin: 0;
-  padding: 0;
-}
-.content {
-  margin-bottom: 50px;
 }
 </style>

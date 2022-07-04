@@ -34,7 +34,7 @@ export default {
         { label: "タブセレクト", path: "/App02" },
         { label: "モーダルウィンドウ", path: "/App03" },
         { label: "スクロールイベント", path: "/App04" },
-        { label: "App05", path: "/App05" },
+        { label: "axiosでAPI", path: "/App05" },
       ]
     }
   },

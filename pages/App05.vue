@@ -30,7 +30,7 @@
                     <a :href="category.link">{{ category.name }}</a>
                   </span>
                 </div>
-                <a :href="post.link" class="post__link">
+                <a :href="post.link" target="_blank" class="post__link">
                   <h3 class="post__title">{{ post.title }}</h3>
                   <div class="post__content" v-html="post.content">
                   </div>
