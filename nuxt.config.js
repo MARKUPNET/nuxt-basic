@@ -51,6 +51,6 @@ export default {
   },
 
   router: {
-    base: '/nuxt-basic/'
+    base: '/portfolio/nuxt-basic/'
   },
 }

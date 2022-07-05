@@ -1,7 +1,7 @@
 <template>
   <header class="site-header" v-bind:class='{menuOpen:flag}'>
     <div class="site-header__in">
-      <div class="header__logo"><a href="/">MARKUPNET</a></div>
+      <div class="header__logo"><a href="/portfolio/nuxt-basic/">MARKUPNET</a></div>
       <button id="hamburger_button" v-on:click='flag=!flag'><span></span></button>
       <div class="header__gnavi" v-bind:class='{naviOpen:flag}'>
         <nav>
@@ -34,7 +34,9 @@ export default {
         { label: "タブセレクト", path: "/App02" },
         { label: "モーダルウィンドウ", path: "/App03" },
         { label: "スクロールイベント", path: "/App04" },
-        { label: "axiosでAPI", path: "/App05" },
+        { label: "手書きのスライダー", path: "/App05" },
+        { label: "Slick Slider", path: "/App06" },
+        { label: "axiosでWordpressの投稿をimport", path: "/App07" },
       ]
     }
   },
@@ -125,9 +127,23 @@ export default {
 			max-width: 100%;
 			padding: 10px;
       text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+
+      a{
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      }
 		}
 	}
+}
+@media screen and (min-width: 992px) {
+  .header__gnavi {
+    ul.menu {
+      li {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
+  }
 }
 .header__gnavi.naviOpen{
   opacity: 1;

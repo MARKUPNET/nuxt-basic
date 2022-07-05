@@ -10,10 +10,10 @@
       <p>参考サイト：<a href="https://michalsnik.github.io/aos/" target="_blank">https://michalsnik.github.io/aos/</a></p>
     </div>
     <div class="loggic">
-      <figure data-aos="fade-left"><img src="/assets/images/ph_1.jpg" alt=""></figure>
-      <figure data-aos="fade-right"><img src="/assets/images/ph_2.jpg" alt=""></figure>
-      <figure data-aos="fade-left"><img src="/assets/images/ph_3.jpg" alt=""></figure>
-      <figure data-aos="fade-right"><img src="/assets/images/ph_4.jpg" alt=""></figure>
+      <figure data-aos="fade-left"><img src="/portfolio/nuxt-basic/assets/images/ph_1.jpg" alt=""></figure>
+      <figure data-aos="fade-right"><img src="/portfolio/nuxt-basic/assets/images/ph_2.jpg" alt=""></figure>
+      <figure data-aos="fade-left"><img src="/portfolio/nuxt-basic/assets/images/ph_3.jpg" alt=""></figure>
+      <figure data-aos="fade-right"><img src="/portfolio/nuxt-basic/assets/images/ph_4.jpg" alt=""></figure>
     </div>
   </section>
 </template>

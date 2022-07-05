@@ -1,42 +1,20 @@
-<template>
+<template lang="">
   <section>
-    <h2 class="sectionTitle">axiosでAPI</h2>
+    <h2 class="sectionTitle">手書きのスライダー</h2>
     <div class="box">
-      <div class="leadTxt">
-        <p>Wordpress（外部サイト）の記事を取得して表示</p>
-      </div>
-    </div>
-    <div class="box">
-      <p>参考サイト：<a href="https://qiita.com/naos_taira/items/25e20688277424f1cf45" target="_blank">https://qiita.com/naos_taira/items/25e20688277424f1cf45</a></p>
+      <p>参考サイト：<a href="https://mebee.info/2020/07/09/post-13107/#outline__4" target="_blank">https://mebee.info/2020/07/09/post-13107/#outline__4</a></p>
     </div>
     <div class="loggic">
-      <h3 class="">以下はWordpressの記事↓↓↓↓</h3>
 
-      <div id="posts">
-        <div v-show="posts.length !== 0" class="posts">
-          <div class="posts__wrapper">
-            <article class="post" v-for="post in posts" :key="post.id">
-              <div class="post__img">
-                <figure v-if="post.thumb" class="thumb">
-                  <img :src="post.thumb[0].source_url" alt="">
-                </figure>
-                <span v-else class="post__imgNone">
-                  NO IMAGE
-                </span>
-              </div>
-              <div class="post__contents">
-                <div v-if="post.category[0]" class="post__categoryList">
-                  <span v-for="category in post.category[0]" :key="category.id" class="post__category">
-                    <a :href="category.link">{{ category.name }}</a>
-                  </span>
-                </div>
-                <a :href="post.link" target="_blank" class="post__link">
-                  <h3 class="post__title">{{ post.title }}</h3>
-                  <div class="post__content" v-html="post.content">
-                  </div>
-                </a>
-              </div>
-            </article>
+      <div class="slider-tegaki-wrap">
+        <h4>手書き</h4>
+        <div class="slider-tegaki-contents">
+          <div class="slide__wrapper">
+            <div v-show="index === page" v-for="(image,index) in images" :key="index">
+              <img :src="image.src" class="image" />
+            </div>
+            <div class="right-btn" @click="nextPage"></div>
+            <div class="left-btn" @click="nextPage"></div>
           </div>
         </div>
       </div>
@@ -46,165 +24,111 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
-  name: 'App05',
-
   data() {
     return {
-      posts: [],
-    }
+      page:0,
+      images:[
+        {
+          src:require('static/assets/images/img1.jpg')
+        },
+        {
+          src:require('static/assets/images/img2.jpg')
+        },
+        {
+          src:require('static/assets/images/img3.jpg')
+        },
+        {
+          src:require('static/assets/images/img4.jpg')
+        },
+        {
+          src:require('static/assets/images/img5.jpg')
+        },
+        {
+          src:require('static/assets/images/img6.jpg')
+        },
+      ],
+    };
   },
-
-  created: function () {
-    var _this = this;
-    axios.get("https://markupnet.jp/wp-json/wp/v2/posts/?_embed").then(function(response) { // [domain]にはドメインを指定
-      response.data.forEach(function (elm) {
-        var data = {
-          title: elm.title.rendered,
-          content: elm.excerpt.rendered,
-          link: elm.link,
-          category: elm._embedded["wp:term"],
-          thumb: elm._embedded["wp:featuredmedia"]
-        }
-        _this.posts.push(data);
-      });
-    })
-    .catch(function (error) {
-      console.log("記事が取得できません。");
-    })
+  methods: {
+    nextPage(){
+      if(this.page + 1 >= this.images.length){
+        this.page = 0
+        return;
+      }
+      this.page ++;
+    },
+    prevPage(){
+      if(this.page <= 0){
+        return;
+      }
+      this.page --;
+    }
   }
-
 }
+
 </script>
 
 <style lang="scss">
-.posts{
 
-  &__wrapper{
-    margin-bottom: 60px;
-    padding: 30px;
-    background-color: #fffcf3;
-  }
+  .slider-tegaki{
 
-}
-
-.post{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 20px 0;
-  font-size: 15px;
-  line-height: 1.75;
-  border-bottom: 1px solid #eee;
-
-  &__img{
-    margin: 0;
-    width: 90%;
-    figure{
+    &-wrap{
       margin: 0;
     }
-    img{
-      display: block;
+
+    &-contents{
+      margin: 0 auto;
+      width: 90%;
     }
   }
 
-	&__imgNone{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-		max-height: 182px;
-		background-color: #fef9f9;
-	}
-
-  &__contents{
+  .slide__wrapper{
+    position:relative;
+  }
+  .image{
     width: 100%;
   }
+  .right-btn,
+  .left-btn{
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position:absolute;
+    top:50%;
+    transform: translateY(-50%);
 
-  &__categoryList{
-    margin: 10px 0;
-  }
-
-  &__category{
-    display: inline-block;
-    padding: 3px 15px;
-    font-size: 12px;
-    line-height: 1;
-    background-color: #e4ebf8;
-    border-radius: 3px;
-
-    & + .post__category{
-      margin-left: 5px;
-    }
-  }
-
-  &__link{}
-
-  &__title{
-    margin-bottom: 20px;
-    padding: 0 0 0 30px;
-    font-size: 24px;
-    font-weight: 700;
-    position: relative;
-
-    &::before,
     &::after{
       content: "";
       display: block;
       width: 10px;
       height: 10px;
-      background-color: #eee;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
       position: absolute;
-      left: 0;
-      top: 10px;
+      left: 50%;
+      top: 50%;
     }
+  }
 
-    &::before{
-      left: 0;
-      top: 10px;
-    }
+  .right-btn{
+    right:20px;
+
+     &::after{
+      transform-origin: 40% 60%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+     }
+  }
+  .left-btn{
+    left:20px;
 
     &::after{
-      left: 10px;
-      top: 20px;
+      transform-origin: 65% 55%;
+      transform: translate(-50%, -50%) rotate(135deg);
     }
   }
-
-  &__content{
-
-    p{
-      margin: 1em 0;
-      font-size: 14px;
-      line-height: 1.5;
-
-      &:first-child{
-        margin-top: 0;
-      }
-
-      &:last-child{
-        margin-bottom: 0;
-      }
-    }
-  }
-
-}
-@media screen and (min-width: 768px) {
-  .post{
-
-    &__img{
-      width: 30%;
-    }
-
-    &__contents{
-      width: 70%;
-      padding: 0 0 0 20px;
-    }
-  }
-}
-
 
 </style>

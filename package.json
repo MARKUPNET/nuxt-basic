@@ -8,17 +8,25 @@
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
+  "type": "module",
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "aos": "^2.3.4",
     "core-js": "^3.19.3",
     "nuxt": "^2.15.8",
+    "swiper": "^7.4.1",
     "vue": "^2.6.14",
+    "vue-agile": "^2.0.0",
+    "vue-awesome-swiper": "^5.0.1",
+    "vue-carousel": "^0.18.0",
+    "vue-flickity": "^1.2.1",
     "vue-observe-visibility": "^1.0.0",
     "vue-scrollmagic": "^1.2.0",
     "vue-scrollto": "^2.20.0",
     "vue-server-renderer": "^2.6.14",
+    "vue-slick": "^1.1.20",
     "vue-template-compiler": "^2.6.14",
+    "vueperslides": "^3.4.2",
     "webpack": "^4.46.0"
   },
   "devDependencies": {

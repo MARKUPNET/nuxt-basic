@@ -1,10 +1,8 @@
 <template>
   <div class="modal-wrap" :class="{ 'is-open': modalSwitch }">
     <div class="modal">
-      <p class="modal-ttl">{{ modalTtl }}</p>
-      <div class="modal-content">
-        <p>{{ modalContent }}</p>
-      </div>
+      <h4 class="modal-ttl" v-html="modalTtl"></h4>
+      <div class="modal-content" v-html="modalContent"></div>
       <div class="modal-btn-wrap">
         <button class="modal-close" @click="modalClose">閉じる</button>
       </div>
