@@ -5,16 +5,7 @@
       <button id="hamburger_button" v-on:click='flag=!flag'><span></span></button>
       <div class="header__gnavi" v-bind:class='{naviOpen:flag}'>
         <nav>
-          <ul class="menu">
-            <li v-for="(link, i) in links" :key="i">
-              <template v-if="isInternalLink(link.path)">
-              <NuxtLink :to="link.path" v-on:click.native="flag=false">{{ link.label }}</NuxtLink>
-              </template>
-              <template v-else>
-                <a :href="link.path" v-on:click="flag=false">{{ link.label }}</a>
-              </template>
-            </li>
-          </ul>
+          <GrobalMenu></GrobalMenu>
         </nav>
       </div>
     </div>
@@ -23,29 +14,12 @@
 
 <script>
 export default {
-
   name: 'Header',
   data() {
     return {
       flag: false,
-
-      links: [
-        { label: "クリックによるクラスのトグル", path: "/App01" },
-        { label: "タブセレクト", path: "/App02" },
-        { label: "モーダルウィンドウ", path: "/App03" },
-        { label: "スクロールイベント", path: "/App04" },
-        { label: "手書きのスライダー", path: "/App05" },
-        { label: "Slick Slider", path: "/App06" },
-        { label: "axiosでWordpressの投稿をimport", path: "/App07" },
-      ]
     }
   },
-  methods: {
-    isInternalLink(path) {
-      return !/^https?:\/\//.test(path)
-    }
-  },
-
 }
 </script>
 

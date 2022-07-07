@@ -31,7 +31,7 @@
 import Modal from "../components/Modal";
 
 export default {
-  name: "App",
+  name: "App03",
   components: {
     Modal,
   },
