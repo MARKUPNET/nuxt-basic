@@ -1,20 +1,46 @@
 <template>
   <section>
-    <h2 class="sectionTitle">Wordpress AFC 取得</h2>
+    <h2 class="sectionTitle">WP REST API カテゴリ一覧表示＋記事一覧表示</h2>
 
     <div class="loggic">
 
-      <div v-show="posts.length !== 0" id="posts" class="posts">
-        <ul class="postsList">
-          <li v-for="post in posts" :key="post.id" >
-            <h3>{{ post.title }}</h3>
-            <dl>
-              <dt>道の駅名</dt>
-              <dd>{{  }}</dd>
-            </dl>
-          </li>
-        </ul>
-      </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2">
+                        <label>
+                            <input type="radio" value="" v-model="currentCategoryId">
+                            <span>全てのカテゴリ</span>
+                        </label>
+                    </div>
+                    <div class="col-2" v-for="category in categories" :key="category.id">
+                        <label>
+                            <input type="radio" :value="category.id" v-model="currentCategoryId">
+                            <span v-text="category.name"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-4 p-2" v-for="post in posts" :key="post.id">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" v-text="post.title.rendered"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" v-text="getDate(post.date)"></h6>
+                        <p class="card-text" v-html="post.excerpt.rendered"></p>
+                        <div class="text-right">
+                            <a :href="post.link" class="card-link">表示する</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="!posts.length">
+                記事が見つかりませんでした。
+            </div>
+        </div>
 
     </div>
   </section>
@@ -28,44 +54,44 @@ export default {
   data() {
     return {
       posts: [],
-      acf: [],
+      categories: [],
+      currentCategoryId: ''
     }
   },
-  created() {
-    var _this = this;
-    axios.get("https://michi-eki.net/wp-json/wp/v2/posts/?per_page=100&page=1&_embed").then(function(response) { // [domain]にはドメインを指定
-      response.data.forEach(function (elm) {
-        var data = {
-          title: elm.title.rendered,
-          content: elm.excerpt.rendered,
-          link: elm.link,
-          category: elm._embedded["wp:term"],
-          thumb: elm._embedded["wp:featuredmedia"]
-        }
-        _this.posts.push(data);
-      });
-    })
-    .catch(function (error) {
-      console.log("記事が取得できません。");
-    })
-  },
+
   methods: {
-    afc() {
+    getCategories() { // カテゴリ一覧を取得
+      var url = 'https://michi-eki.net/wp-json/wp/v2/categories?per_page=100';
+      axios.get(url)
+        .then(response => {
+          this.categories = response.data;
+        });
+    },
+    getPosts() { // 記事一覧を取得
+      var url = 'https://michi-eki.net/wp-json/wp/v2/posts?categories=' + this.currentCategoryId;
+      axios.get(url)
+        .then(response => {
+          this.posts = response.data;
+        });
+    },
+    getDate(date) {
+      const dt = new Date(date);
+      return dt.getFullYear() +'/'+ (dt.getMonth() + 1) +'/'+ dt.getDate()
+    },
+  },
+
+  mounted() {
+    this.getCategories();
+    this.getPosts();
+  },
+
+  watch: {
+    currentCategoryId() {
+      this.getPosts();
     }
   }
 }
 </script>
 
 <style lang="scss">
-ul.postsList{
-  margin: 10px 0;
-
-  li{
-    margin: 10px 0;
-
-    h3{
-      margin-bottom: 10px;
-    }
-  }
-}
 </style>
