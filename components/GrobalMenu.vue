@@ -25,6 +25,7 @@ export default {
         { label: "手書きのスライダー", path: "/App05" },
         { label: "Slick Slider", path: "/App06" },
         { label: "axiosでWordpressの投稿をimport", path: "/App07" },
+        { label: "WP REST API / CATEGORY表示　ACF表示", path: "/App08" },
       ]
     }
   },
